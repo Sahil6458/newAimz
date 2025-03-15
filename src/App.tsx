@@ -213,20 +213,14 @@ function App() {
               {/* Logo */}
               <div
                 ref={navLogoRef}
-                className={`flex items-center cursor-pointer transition-all duration-700 nav-logo-container ${showFooterLogo ? 'opacity-0 scale-50' : 'opacity-100 scale-100'}`}
+                className="flex items-center cursor-pointer transition-all duration-500 nav-logo-container"
                 onClick={() => { setActivePage('home'); window.scrollTo(0, 0); }}
               >
-                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                  <div className="relative">
-                    <LucideHexagon className="w-10 h-10 text-white stroke-10" />
-                    <LucideHexagon className="w-6 h-6 text-blue-400 stroke-10 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <span className="text-2xl font-extrabold text-white">AiMZ <span className="text-blue-400">Infotech</span></span>
-                  <p className="text-xs text-gray-400 -mt-1">Transforming Ideas into Reality</p>
-                </div>
+                <img
+                  src="/logo.png"
+                  alt="AiMZ Infotech Logo"
+                  className="h-12 w-auto object-contain"
+                />
               </div>
 
               {/* Desktop Navigation */}
@@ -1387,7 +1381,7 @@ function App() {
               <p className="mb-8 text-lg text-gray-300">Let's discuss how we can help you achieve your goals</p>
               <button
                 onClick={() => handleNavClick('contact')}
-                className="mb- text-white px-8 py-3 rounded-full font-semibold bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-6 py-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-blue-500/20 transition-colors"
+                className="mb-8  font-semibold bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-8 py-4 rounded-full    duration-300 shadow-lg hover:shadow-blue-500/20 transition-colors"
               >
                 Contact Us
               </button>
@@ -1395,7 +1389,7 @@ function App() {
 
             {/* Animated Footer Logo */}
             <div
-              className={`fixed top-0 left-0 z-40 flex items-center h-20 px-4 transition-all duration-700 ${showFooterLogo ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}
+              className={`fixed top-0 left-0 z-40 flex items-center h-20 px-4 transition-all duration-700 ${false ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-20'}`}
             >
               <div className="relative group">
                 <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
@@ -1412,6 +1406,20 @@ function App() {
 
             {/* Footer Section */}
             <Footer />
+          </div>
+
+          {/* Footer logo that will animate and merge with nav logo */}
+          <div
+            className="absolute bottom-full left-1/2 transform -translate-x-1/2 -translate-y-8 opacity-0 transition-all duration-700 footer-logo"
+            id="footer-logo"
+          >
+            <div className="bg-gradient-to-r from-blue-600 to-blue-400 p-2 rounded-full">
+              <img
+                src="/logo.png"
+                alt="AiMZ Infotech Logo"
+                className="h-12 w-auto object-contain logo-theme"
+              />
+            </div>
           </div>
         </>
       )}

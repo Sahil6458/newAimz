@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Calendar, LucideHexagon } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Calendar } from 'lucide-react';
 import ReactCountryFlag from 'react-country-flag';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -283,16 +283,12 @@ export const Footer = () => {
           <div>
             <div className="flex items-center mb-4">
               <div className="flex items-center cursor-pointer" onClick={() => { }}>
-                <div className="relative group">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                  <div className="relative">
-                    <LucideHexagon className="w-10 h-10 text-white stroke-10" />
-                    <LucideHexagon className="w-6 h-6 text-blue-400 stroke-10 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
-                  </div>
-                </div>
-                <div className="ml-4">
-                  <span className="text-2xl font-extrabold text-white">AiMZ <span className="text-blue-400">Infotech</span></span>
-                  <p className="text-xs text-gray-400 -mt-1">Transforming Ideas into Reality</p>
+                <div className="relative">
+                  <img
+                    src="/logo.png"
+                    alt="AiMZ Infotech Logo"
+                    className="h-12 w-auto object-contain"
+                  />
                 </div>
               </div>
             </div>
