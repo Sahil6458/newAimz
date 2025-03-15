@@ -1,0 +1,393 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.testimonials-slider .slick-slide {
+    padding: 10px;
+}
+
+.testimonials-slider .slick-dots li button:before {
+    color: #3b82f6;
+    /* blue-500 */
+}
+
+.testimonials-slider .slick-dots li.slick-active button:before {
+    color: #3b82f6;
+    /* blue-500 */
+}
+
+.testimonials-slider .slick-prev,
+.testimonials-slider .slick-next {
+    width: 30px;
+    height: 30px;
+}
+
+.testimonials-slider .slick-prev:before,
+.testimonials-slider .slick-next:before {
+    color: #3b82f6;
+    /* blue-500 */
+    font-size: 30px;
+}
+
+/* Add these styles for smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Optional: Add a transition effect for the navbar */
+nav {
+    transition: background-color 0.3s ease;
+}
+
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* DatePicker customization */
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.react-datepicker__input-container {
+    width: 100%;
+}
+
+.react-datepicker {
+    font-family: inherit;
+    border-radius: 0.5rem;
+    border: 1px solid #e5e7eb;
+}
+
+.react-datepicker__header {
+    background-color: #f3f4f6;
+    border-bottom: 1px solid #e5e7eb;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.react-datepicker__time-container {
+    border-left: 1px solid #e5e7eb;
+}
+
+.react-datepicker__time-container .react-datepicker__time {
+    border-radius: 0;
+}
+
+.react-datepicker__time-container .react-datepicker__time-box {
+    border-radius: 0;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__time-container .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected {
+    background-color: #2563eb !important;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.5);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.5);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(59, 130, 246, 0.7);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Logo merging animation */
+@keyframes logoMerge {
+    0% {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translate(-50%, -300%);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: translate(-50%, -600%);
+        opacity: 0;
+    }
+}
+
+.footer-logo {
+    z-index: 60;
+    position: absolute;
+    transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.8s ease;
+}
+
+.footer-logo.merging {
+    animation: logoMerge 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+/* Navigation logo receiving animation */
+@keyframes receiveLogoGlow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 20px 10px rgba(59, 130, 246, 0.4);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+    }
+}
+
+.nav-logo-container.receiving {
+    animation: receiveLogoGlow 1s ease-out forwards;
+}
+
+/* Premium animations and transitions */
+
+/* Text reveal animations */
+@keyframes revealFromBottom {
+    0% {
+        transform: translateY(40px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes revealFromLeft {
+    0% {
+        transform: translateX(-40px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes revealFromRight {
+    0% {
+        transform: translateX(40px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInBlur {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* Text gradient animation */
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Card hover effects */
+.premium-card {
+    transition: transform 0.5s cubic-bezier(0.21, 0.6, 0.44, 1),
+        box-shadow 0.5s cubic-bezier(0.21, 0.6, 0.44, 1);
+    will-change: transform, box-shadow;
+}
+
+.premium-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Staggered animation classes for sections */
+.reveal-animation {
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.21, 0.6, 0.44, 1),
+        transform 0.8s cubic-bezier(0.21, 0.6, 0.44, 1);
+}
+
+.reveal-animation.active.reveal-bottom {
+    animation: revealFromBottom 0.8s cubic-bezier(0.21, 0.6, 0.44, 1) forwards;
+}
+
+.reveal-animation.active.reveal-left {
+    animation: revealFromLeft 0.8s cubic-bezier(0.21, 0.6, 0.44, 1) forwards;
+}
+
+.reveal-animation.active.reveal-right {
+    animation: revealFromRight 0.8s cubic-bezier(0.21, 0.6, 0.44, 1) forwards;
+}
+
+.reveal-animation.active.reveal-scale {
+    animation: scaleUp 0.8s cubic-bezier(0.21, 0.6, 0.44, 1) forwards;
+}
+
+.reveal-animation.active.reveal-blur {
+    animation: fadeInBlur 0.8s cubic-bezier(0.21, 0.6, 0.44, 1) forwards;
+}
+
+/* Animation delays for staggered effects */
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+.delay-400 {
+    animation-delay: 0.4s;
+}
+
+.delay-500 {
+    animation-delay: 0.5s;
+}
+
+.delay-600 {
+    animation-delay: 0.6s;
+}
+
+.delay-700 {
+    animation-delay: 0.7s;
+}
+
+.delay-800 {
+    animation-delay: 0.8s;
+}
+
+/* Gradient text effect */
+.gradient-text {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd, #3b82f6);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientFlow 8s ease infinite;
+}
+
+/* Floating animation for cards and elements */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-slow {
+    animation: float 8s ease-in-out infinite;
+}
+
+.floating-fast {
+    animation: float 4s ease-in-out infinite;
+}
+
+/* Smooth image zoom on hover */
+.zoom-container {
+    overflow: hidden;
+}
+
+.zoom-image {
+    transition: transform 1.2s cubic-bezier(0.21, 0.6, 0.44, 1);
+}
+
+.zoom-container:hover .zoom-image {
+    transform: scale(1.1);
+}
+
+/* Glow effect for buttons and important elements */
+.glow-on-hover {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.glow-on-hover::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent,
+            rgba(59, 130, 246, 0.1),
+            transparent 30%);
+    z-index: -1;
+    transition: transform 0.7s linear;
+    transform: rotate(0deg);
+    opacity: 0;
+}
+
+.glow-on-hover:hover::after {
+    transform: rotate(360deg);
+    opacity: 1;
+}
