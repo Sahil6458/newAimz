@@ -56,21 +56,6 @@ function AboutUs() {
                         <div className="p-8 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all">
                             <div className="flex items-center mb-4">
                                 <div className="bg-blue-500/10 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-blue-500/20 transition-all">
-                                    <Target className="w-6 h-6 text-blue-500" />
-                                </div>
-                                <h2 className="text-2xl font-bold">Our Mission</h2>
-                            </div>
-                            <p className="text-gray-300">
-                                To empower businesses with innovative technology solutions that drive
-                                success and sustainable growth. We're committed to delivering excellence
-                                through cutting-edge development and unwavering dedication.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
-                        <div className="p-8 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all">
-                            <div className="flex items-center mb-4">
-                                <div className="bg-blue-500/10 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-blue-500/20 transition-all">
                                     <Trophy className="w-6 h-6 text-blue-500" />
                                 </div>
                                 <h2 className="text-2xl font-bold">Our Vision</h2>
@@ -79,6 +64,22 @@ function AboutUs() {
                                 To be recognized as a leading force in technological innovation,
                                 known for our creativity, reliability, and the measurable impact
                                 we create for our clients globally.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
+                        <div className="p-8 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all">
+                            <div className="flex items-center mb-4">
+                                <div className="bg-blue-500/10 w-12 h-12 rounded-xl flex items-center justify-center mr-4 group-hover:bg-blue-500/20 transition-all">
+                                    <Target className="w-6 h-6 text-blue-500" />
+                                </div>
+                                <h2 className="text-2xl font-bold">Our Mission</h2>
+                            </div>
+                            <p className="text-gray-300">
+                                To empower businesses with innovative technology solutions that drive
+                                success and sustainable growth. We're committed to delivering excellence
+                                through cutting-edge development and unwavering dedication.
                             </p>
                         </div>
                     </div>

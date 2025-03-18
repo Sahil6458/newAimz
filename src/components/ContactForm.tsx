@@ -275,6 +275,46 @@ export function ContactForm() {
 }
 
 export const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [subscriptionStatus, setSubscriptionStatus] = useState<'idle' | 'loading' | 'success' | 'error' | 'exists'>('idle');
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setSubscriptionStatus('error');
+      return;
+    }
+
+    setSubscriptionStatus('loading');
+
+    try {
+      const { data: existingEmails } = await supabase
+        .from('newsletter')
+        .select('email')
+        .eq('email', email)
+        .single();
+
+      if (existingEmails) {
+        setSubscriptionStatus('exists');
+        return;
+      }
+
+      const { error } = await supabase
+        .from('newsletter')
+        .insert([{ email }]);
+
+      if (error) throw error;
+
+      setSubscriptionStatus('success');
+      setEmail('');
+    } catch (error) {
+      console.error('Error:', error);
+      setSubscriptionStatus('error');
+    }
+  };
+
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8 border-t border-gray-800">
       <div className="container mx-auto px-8">
@@ -285,9 +325,9 @@ export const Footer = () => {
               <div className="flex items-center cursor-pointer" onClick={() => { }}>
                 <div className="relative">
                   <img
-                    src="/logo.png"
+                    src="https://i.postimg.cc/fyg3xp9x/logo.png"
                     alt="AiMZ Infotech Logo"
-                    className="h-12 w-auto object-contain"
+                    className="h-12 w-auto object-contain block"
                   />
                 </div>
               </div>
@@ -373,15 +413,43 @@ export const Footer = () => {
           <div className="max-w-xl mx-auto text-center">
             <h3 className="text-lg font-semibold mb-2 text-white">Subscribe to Our Newsletter</h3>
             <p className="text-gray-400 mb-4">Stay updated with our latest news, insights, and offers.</p>
-            <div className="flex flex-col sm:flex-row gap-2">
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-2">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-grow px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className={`flex-grow px-4 py-2 bg-gray-800 border ${subscriptionStatus === 'error' ? 'border-red-500' : 'border-gray-700'
+                  } rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white`}
+                disabled={subscriptionStatus === 'loading' || subscriptionStatus === 'success'}
               />
-              <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors">
-                Subscribe
+              <button
+                type="submit"
+                disabled={subscriptionStatus === 'loading' || subscriptionStatus === 'success'}
+                className={`${subscriptionStatus === 'success' ? 'bg-green-500' : 'bg-blue-500'
+                  } hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors flex items-center justify-center min-w-[120px]`}
+              >
+                {subscriptionStatus === 'loading' ? (
+                  <span className="inline-block animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></span>
+                ) : subscriptionStatus === 'success' ? (
+                  'Subscribed!'
+                ) : (
+                  'Subscribe'
+                )}
               </button>
+            </form>
+
+            {/* Status Messages */}
+            <div className="mt-2 text-sm">
+              {subscriptionStatus === 'error' && (
+                <p className="text-red-500">Please enter a valid email address.</p>
+              )}
+              {subscriptionStatus === 'exists' && (
+                <p className="text-yellow-500">This email is already subscribed to our newsletter.</p>
+              )}
+              {subscriptionStatus === 'success' && (
+                <p className="text-green-500">Thank you for subscribing to our newsletter!</p>
+              )}
             </div>
           </div>
         </div>

@@ -25,6 +25,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import AboutUs from './components/AboutUs';
 import BlogsPage from './components/BlogsPage';
+import { supabase } from './lib/supabaseClient';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -217,9 +218,9 @@ function App() {
                 onClick={() => { setActivePage('home'); window.scrollTo(0, 0); }}
               >
                 <img
-                  src="/logo.png"
+                  src="https://i.postimg.cc/fyg3xp9x/logo.png"
                   alt="AiMZ Infotech Logo"
-                  className="h-12 w-auto object-contain"
+                  className="h-12 w-auto object-contain block"
                 />
               </div>
 
@@ -685,7 +686,7 @@ function App() {
                 <div className="relative reveal-animation reveal-right delay-200">
                   <div className="relative z-10 overflow-hidden rounded-xl group zoom-container">
                     <img
-                      src="../growth.png"
+                      src="https://i.postimg.cc/nz973Hn3/growth.png"
                       alt="Team collaborating"
                       className="rounded-xl shadow-2xl w-full transition-transform duration-700 zoom-image"
                     />
@@ -1070,29 +1071,146 @@ function App() {
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                {/* E-commerce */}
+                <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
+                  <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
+                    <div className="bg-blue-500/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-all">
+                      <ShoppingBag className="w-8 h-8 text-blue-500" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-3">E-commerce & Retail</h3>
+                    <p className="text-gray-400 mb-4 flex-grow">
+                      Building seamless shopping experiences with custom e-commerce platforms,
+                      inventory management systems, and omnichannel retail solutions.
+                    </p>
+                    <div className="space-y-3 mb-4">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">B2C & B2B Marketplaces</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">Inventory Management Systems</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">Custom POS Solutions</span>
+                      </div>
+                    </div>
+                    <div className="mt-auto">
+                      <button
+                        onClick={() => handleNavClick('contact')}
+                        className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center group-hover:translate-x-1 transition-transform"
+                      >
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* SaaS */}
+                <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
+                  <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
+                    <div className="bg-blue-500/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-all">
+                      <Cloud className="w-8 h-8 text-blue-500" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-3">SaaS & Cloud Solutions</h3>
+                    <p className="text-gray-400 mb-4 flex-grow">
+                      Developing scalable, cloud-native applications and SaaS platforms that
+                      drive business efficiency and digital transformation.
+                    </p>
+                    <div className="space-y-3 mb-4">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">Business Management & ERP</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">CRM & Marketing Automation</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">Subscription Management</span>
+                      </div>
+                    </div>
+                    <div className="mt-auto">
+                      <button
+                        onClick={() => handleNavClick('contact')}
+                        className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center group-hover:translate-x-1 transition-transform"
+                      >
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Logistics */}
+                <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
+                  <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
+                    <div className="bg-blue-500/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-all">
+                      <Car className="w-8 h-8 text-blue-500" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-3">Logistics & Transportation</h3>
+                    <p className="text-gray-400 mb-4 flex-grow">
+                      Optimizing supply chains with fleet management, route optimization,
+                      and real-time tracking solutions for modern logistics operations.
+                    </p>
+                    <div className="space-y-3 mb-4">
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">Fleet & Route Optimization</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">Warehouse & Inventory Tracking</span>
+                      </div>
+                      <div className="flex items-center">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
+                        <span className="text-gray-300 text-sm">On-Demand Delivery Apps</span>
+                      </div>
+                    </div>
+                    <div className="mt-auto">
+                      <button
+                        onClick={() => handleNavClick('contact')}
+                        className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center group-hover:translate-x-1 transition-transform"
+                      >
+                        Learn More
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
                 {/* Healthcare */}
                 <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
                   <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
                     <div className="bg-blue-500/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-all">
                       <Users className="w-8 h-8 text-blue-500" />
                     </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">Healthcare & Telemedicine</h3>
+                    <h3 className="text-xl font-semibold text-white mb-3">Healthcare & Fitness</h3>
                     <p className="text-gray-400 mb-4 flex-grow">
-                      Revolutionizing patient care with digital health solutions, from telemedicine platforms to
-                      electronic health records and AI-powered diagnostic tools.
+                      Revolutionizing patient care and wellness with digital health & fitness solutions, from telemedicine platforms and fitness apps to electronic health records and AI-powered diagnostic tools.
                     </p>
                     <div className="space-y-3 mb-4">
                       <div className="flex items-center">
                         <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Telehealth & Remote Monitoring</span>
+                        <span className="text-gray-300 text-sm">Health & Fitness Tracking Solutions</span>
                       </div>
                       <div className="flex items-center">
                         <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">EHR & EMR Systems</span>
+                        <span className="text-gray-300 text-sm">EHR & EMR Platforms</span>
                       </div>
                       <div className="flex items-center">
                         <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Health & Wellness Apps</span>
+                        <span className="text-gray-300 text-sm">Wellness & Lifestyle Apps</span>
                       </div>
                     </div>
                     <div className="mt-auto">
@@ -1152,45 +1270,6 @@ function App() {
                   </div>
                 </div>
 
-                {/* E-commerce */}
-                <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
-                  <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
-                    <div className="bg-blue-500/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-all">
-                      <ShoppingBag className="w-8 h-8 text-blue-500" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">E-commerce & Retail</h3>
-                    <p className="text-gray-400 mb-4 flex-grow">
-                      Building seamless shopping experiences with custom e-commerce platforms,
-                      inventory management systems, and omnichannel retail solutions.
-                    </p>
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">B2C & B2B Marketplaces</span>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Inventory Management Systems</span>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Custom POS Solutions</span>
-                      </div>
-                    </div>
-                    <div className="mt-auto">
-                      <button
-                        onClick={() => handleNavClick('contact')}
-                        className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center group-hover:translate-x-1 transition-transform"
-                      >
-                        Learn More
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
                 {/* EdTech */}
                 <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
                   <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
@@ -1230,83 +1309,6 @@ function App() {
                   </div>
                 </div>
 
-                {/* Logistics */}
-                <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
-                  <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
-                    <div className="bg-blue-500/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-all">
-                      <Car className="w-8 h-8 text-blue-500" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">Logistics & Transportation</h3>
-                    <p className="text-gray-400 mb-4 flex-grow">
-                      Optimizing supply chains with fleet management, route optimization,
-                      and real-time tracking solutions for modern logistics operations.
-                    </p>
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Fleet & Route Optimization</span>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Warehouse & Inventory Tracking</span>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">On-Demand Delivery Apps</span>
-                      </div>
-                    </div>
-                    <div className="mt-auto">
-                      <button
-                        onClick={() => handleNavClick('contact')}
-                        className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center group-hover:translate-x-1 transition-transform"
-                      >
-                        Learn More
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* SaaS */}
-                <div className="bg-gradient-to-br from-gray-900 to-black rounded-xl overflow-hidden group hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] transition-all duration-500">
-                  <div className="p-6 border border-gray-800 h-full rounded-xl group-hover:border-blue-500/50 transition-all flex flex-col">
-                    <div className="bg-blue-500/10 w-16 h-16 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-500/20 transition-all">
-                      <Cloud className="w-8 h-8 text-blue-500" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-white mb-3">SaaS & Cloud Solutions</h3>
-                    <p className="text-gray-400 mb-4 flex-grow">
-                      Developing scalable, cloud-native applications and SaaS platforms that
-                      drive business efficiency and digital transformation.
-                    </p>
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Business Management & ERP</span>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">CRM & Marketing Automation</span>
-                      </div>
-                      <div className="flex items-center">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mr-2"></div>
-                        <span className="text-gray-300 text-sm">Subscription Management</span>
-                      </div>
-                    </div>
-                    <div className="mt-auto">
-                      <button
-                        onClick={() => handleNavClick('contact')}
-                        className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center group-hover:translate-x-1 transition-transform"
-                      >
-                        Learn More
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-                          <path fillRule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               <div className="mt-16 text-center">
@@ -1415,9 +1417,9 @@ function App() {
           >
             <div className="bg-gradient-to-r from-blue-600 to-blue-400 p-2 rounded-full">
               <img
-                src="/logo.png"
+                src="https://i.postimg.cc/fyg3xp9x/logo.png"
                 alt="AiMZ Infotech Logo"
-                className="h-12 w-auto object-contain logo-theme"
+                className="h-12 w-auto object-contain block"
               />
             </div>
           </div>

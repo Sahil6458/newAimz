@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, Tag, ChevronRight, Search, ArrowRight } from 'lucide-react';
+import { Calendar, Clock, Tag, ChevronRight, Search, ArrowRight, Mail, AlertCircle, CheckCircle } from 'lucide-react';
+import { supabase } from '../lib/supabaseClient';
 
 function BlogsPage() {
     const [activeCategory, setActiveCategory] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
+    const [email, setEmail] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [subscriptionStatus, setSubscriptionStatus] = useState<{
+        type: 'success' | 'error' | 'info' | null;
+        message: string;
+    }>({ type: null, message: '' });
 
     const categories = [
         'All', 'Technology', 'Web Development', 'Mobile Apps', 'Cloud Computing',
@@ -13,10 +20,10 @@ function BlogsPage() {
     const blogPosts = [
         {
             id: 1,
-            title: 'The Future of Cross-Platform Development in 2023',
+            title: 'The Future of Cross-Platform Development in 2025',
             excerpt: 'Explore the latest trends and technologies shaping the future of cross-platform app development and how businesses can leverage them.',
             category: 'Mobile Apps',
-            date: 'June 15, 2023',
+            date: 'March 15, 2025',
             readTime: '8 min read',
             image: 'https://images.unsplash.com/photo-1526498460520-4c246339dccb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
             featured: true
@@ -26,9 +33,9 @@ function BlogsPage() {
             title: 'How AI is Transforming Software Development',
             excerpt: 'Discover how artificial intelligence is revolutionizing the way we build, test, and deploy software applications.',
             category: 'AI & Machine Learning',
-            date: 'May 28, 2023',
+            date: 'March 10, 2025',
             readTime: '6 min read',
-            image: 'https://images.unsplash.com/photo-1677442135136-760c813a743d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80',
+            image: 'https://media.istockphoto.com/id/2092028381/photo/ai-image-creation-technology-man-use-ai-software-on-a-laptop-to-generate-images-showcasing-a.jpg?s=1024x1024&w=is&k=20&c=sKhKtzGITTNBF6o6pnqcVMm3tC-BiijiipuInXqM2Ao=',
             featured: true
         },
         {
@@ -36,7 +43,7 @@ function BlogsPage() {
             title: 'Building Scalable SaaS Solutions: Best Practices',
             excerpt: 'Learn the key architectural principles and development practices for creating SaaS applications that can scale with your business.',
             category: 'Cloud Computing',
-            date: 'April 12, 2023',
+            date: 'February 28, 2025',
             readTime: '10 min read',
             image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80',
             featured: false
@@ -46,7 +53,7 @@ function BlogsPage() {
             title: 'The Complete Guide to SEO for Tech Companies',
             excerpt: 'A comprehensive guide to search engine optimization strategies specifically tailored for technology companies and startups.',
             category: 'Digital Marketing',
-            date: 'March 5, 2023',
+            date: 'February 25, 2025',
             readTime: '12 min read',
             image: 'https://images.unsplash.com/photo-1562577309-4932fdd64cd1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
             featured: false
@@ -56,7 +63,7 @@ function BlogsPage() {
             title: 'React vs Angular: Choosing the Right Framework',
             excerpt: 'An in-depth comparison of React and Angular to help you decide which framework is best suited for your next web project.',
             category: 'Web Development',
-            date: 'February 20, 2023',
+            date: 'February 22, 2025',
             readTime: '9 min read',
             image: 'https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
             featured: false
@@ -66,7 +73,7 @@ function BlogsPage() {
             title: 'Securing Your API: Authentication Best Practices',
             excerpt: 'Learn essential strategies for implementing robust authentication and authorization in your API endpoints.',
             category: 'Technology',
-            date: 'January 15, 2023',
+            date: 'February 18, 2025',
             readTime: '7 min read',
             image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
             featured: false
@@ -83,6 +90,66 @@ function BlogsPage() {
 
     // Get featured blogs
     const featuredBlogs = blogPosts.filter(blog => blog.featured);
+
+    // Handle newsletter subscription
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setSubscriptionStatus({
+                type: 'error',
+                message: 'Please enter a valid email address.'
+            });
+            return;
+        }
+
+        setIsSubmitting(true);
+        setSubscriptionStatus({ type: 'info', message: 'Processing your subscription...' });
+
+        try {
+            // First check if email already exists
+            const { data: existingEmails, error: checkError } = await supabase
+                .from('newsletter')
+                .select('email')
+                .eq('email', email)
+                .limit(1);
+
+            if (checkError) throw checkError;
+
+            // If email already exists
+            if (existingEmails && existingEmails.length > 0) {
+                setSubscriptionStatus({
+                    type: 'info',
+                    message: 'You are already subscribed to our newsletter!'
+                });
+                return;
+            }
+
+            // If email doesn't exist, add it to the database
+            const { error: insertError } = await supabase
+                .from('newsletter')
+                .insert([{ email }]);
+
+            if (insertError) throw insertError;
+
+            // Success
+            setSubscriptionStatus({
+                type: 'success',
+                message: 'Thank you for subscribing to our newsletter!'
+            });
+            setEmail(''); // Clear the input field
+        } catch (error) {
+            console.error('Error subscribing to newsletter:', error);
+            setSubscriptionStatus({
+                type: 'error',
+                message: 'There was an error processing your subscription. Please try again.'
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="bg-black text-white min-h-screen pt-24">
@@ -248,16 +315,41 @@ function BlogsPage() {
                             <p className="text-gray-400 mb-6">
                                 Get the latest articles, tutorials, and industry insights delivered straight to your inbox.
                             </p>
-                            <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+
+                            {subscriptionStatus.type && (
+                                <div className={`mb-6 p-4 rounded-lg flex items-center justify-center ${subscriptionStatus.type === 'success' ? 'bg-green-900/30 text-green-400' :
+                                    subscriptionStatus.type === 'error' ? 'bg-red-900/30 text-red-400' :
+                                        'bg-blue-900/30 text-blue-400'
+                                    }`}>
+                                    {subscriptionStatus.type === 'success' ? (
+                                        <CheckCircle className="w-5 h-5 mr-2" />
+                                    ) : subscriptionStatus.type === 'error' ? (
+                                        <AlertCircle className="w-5 h-5 mr-2" />
+                                    ) : (
+                                        <Mail className="w-5 h-5 mr-2" />
+                                    )}
+                                    <span>{subscriptionStatus.message}</span>
+                                </div>
+                            )}
+
+                            <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
                                 <input
                                     type="email"
                                     placeholder="Enter your email"
                                     className="bg-black/50 border border-gray-700 rounded-lg py-3 px-4 flex-grow focus:outline-none focus:border-blue-500 transition-colors"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                    disabled={isSubmitting}
                                 />
-                                <button className="bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/20 font-medium">
-                                    Subscribe
+                                <button
+                                    type="submit"
+                                    className="bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 text-white px-6 py-3 rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                                    disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? 'Subscribing...' : 'Subscribe'}
                                 </button>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
