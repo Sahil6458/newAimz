@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Calendar, Clock, Tag, ChevronRight, Search, ArrowRight, Mail, AlertCircle, CheckCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Calendar, Clock, Tag, ChevronRight, Search, ArrowRight, Mail, AlertCircle, CheckCircle, ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabaseClient';
 
 function BlogsPage() {
@@ -11,6 +11,7 @@ function BlogsPage() {
         type: 'success' | 'error' | 'info' | null;
         message: string;
     }>({ type: null, message: '' });
+    const [selectedBlog, setSelectedBlog] = useState<any>(null);
 
     const categories = [
         'All', 'Technology', 'Web Development', 'Mobile Apps', 'Cloud Computing',
@@ -151,6 +152,139 @@ function BlogsPage() {
         }
     };
 
+    // Handle blog selection
+    const handleBlogClick = (blog: any) => {
+        setSelectedBlog(blog);
+        // Update URL without full page navigation - for custom domain use direct path
+        window.history.pushState(
+            { blogId: blog.id },
+            '',
+            `/blogs/${blog.id}`
+        );
+        window.scrollTo(0, 0);
+    };
+
+    // Handle back navigation
+    const handleBackToBlogs = () => {
+        setSelectedBlog(null);
+        window.history.pushState({}, '', `/blogs`);
+        window.scrollTo(0, 0);
+    };
+
+    // Check URL on load to see if we should display a specific blog
+    useEffect(() => {
+        const pathParts = window.location.pathname.split('/');
+        const blogIdFromUrl = pathParts[pathParts.length - 1];
+
+        // If there's a numeric ID in the URL
+        if (!isNaN(Number(blogIdFromUrl))) {
+            const blogId = Number(blogIdFromUrl);
+            const blog = blogPosts.find(post => post.id === blogId);
+            if (blog) {
+                setSelectedBlog(blog);
+            }
+        }
+    }, []);
+
+    // Listen for popstate events (browser back/forward)
+    useEffect(() => {
+        const handlePopState = (event: PopStateEvent) => {
+            if (event.state && event.state.blogId) {
+                const blog = blogPosts.find(post => post.id === event.state.blogId);
+                if (blog) {
+                    setSelectedBlog(blog);
+                }
+            } else {
+                setSelectedBlog(null);
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => window.removeEventListener('popstate', handlePopState);
+    }, []);
+
+    // If a blog is selected, show the blog detail view
+    if (selectedBlog) {
+        return (
+            <div className="bg-black text-white min-h-screen pt-24">
+                <div className="container mx-auto px-4 md:px-8 lg:px-16">
+                    {/* Back button */}
+                    <button
+                        onClick={handleBackToBlogs}
+                        className="flex items-center text-blue-500 hover:text-blue-400 mb-8 transition-colors"
+                    >
+                        <ArrowLeft className="w-5 h-5 mr-2" />
+                        Back to Blogs
+                    </button>
+
+                    {/* Blog Header */}
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4">{selectedBlog.title}</h1>
+
+                    {/* Blog meta */}
+                    <div className="flex flex-wrap items-center text-gray-400 gap-4 mb-8">
+                        <div className="flex items-center">
+                            <Calendar className="w-4 h-4 mr-2" />
+                            {selectedBlog.date}
+                        </div>
+                        <div className="flex items-center">
+                            <Clock className="w-4 h-4 mr-2" />
+                            {selectedBlog.readTime}
+                        </div>
+                        <div className="flex items-center">
+                            <Tag className="w-4 h-4 mr-2" />
+                            {selectedBlog.category}
+                        </div>
+                    </div>
+
+                    {/* Featured Image */}
+                    <div className="rounded-xl overflow-hidden mb-8">
+                        <img
+                            src={selectedBlog.image}
+                            alt={selectedBlog.title}
+                            className="w-full h-[400px] object-cover"
+                            onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = `https://source.unsplash.com/random/800x600?${selectedBlog.category.toLowerCase().replace(' ', ',')}`;
+                            }}
+                        />
+                    </div>
+
+                    {/* Blog Content */}
+                    <div className="max-w-4xl mx-auto mb-16">
+                        <p className="text-gray-300 mb-6 text-lg">{selectedBlog.excerpt}</p>
+
+                        {/* Placeholder content - replace with actual content when available */}
+                        <div className="text-gray-200 space-y-6">
+                            <p>
+                                This is a detailed blog post about {selectedBlog.title}. The full content would
+                                typically be stored in your database or CMS and loaded dynamically.
+                            </p>
+
+                            <h2 className="text-2xl font-bold mt-8 mb-4">Key Points</h2>
+                            <ul className="list-disc pl-6 space-y-2">
+                                <li>Important insights about {selectedBlog.category}</li>
+                                <li>Critical technologies and methodologies discussed</li>
+                                <li>Implementation strategies and best practices</li>
+                                <li>Future trends and industry developments</li>
+                            </ul>
+
+                            <p>
+                                The article would typically include code samples, diagrams, and in-depth
+                                explanations relevant to the topic.
+                            </p>
+
+                            <h2 className="text-2xl font-bold mt-8 mb-4">Conclusion</h2>
+                            <p>
+                                This comprehensive guide has covered the essential aspects of {selectedBlog.title}.
+                                We hope you found this information valuable for your projects and professional development.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="bg-black text-white min-h-screen pt-24">
             <div className="container mx-auto px-4 md:px-8 lg:px-16">
@@ -205,7 +339,10 @@ function BlogsPage() {
                                                     <Calendar className="w-4 h-4 mr-1" />
                                                     {blog.date}
                                                 </span>
-                                                <button className="text-blue-400 hover:text-blue-300 flex items-center text-sm font-medium group-hover:translate-x-1 transition-transform">
+                                                <button
+                                                    className="text-blue-400 hover:text-blue-300 flex items-center text-sm font-medium group-hover:translate-x-1 transition-transform"
+                                                    onClick={() => handleBlogClick(blog)}
+                                                >
                                                     Read More
                                                     <ChevronRight className="w-4 h-4 ml-1" />
                                                 </button>
@@ -281,7 +418,10 @@ function BlogsPage() {
                                                 <Calendar className="w-3 h-3 mr-1" />
                                                 {blog.date}
                                             </span>
-                                            <button className="text-blue-400 hover:text-blue-300 flex items-center text-sm font-medium group-hover:translate-x-1 transition-transform">
+                                            <button
+                                                className="text-blue-400 hover:text-blue-300 flex items-center text-sm font-medium group-hover:translate-x-1 transition-transform"
+                                                onClick={() => handleBlogClick(blog)}
+                                            >
                                                 Read More
                                                 <ChevronRight className="w-4 h-4 ml-1" />
                                             </button>

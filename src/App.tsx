@@ -17,6 +17,7 @@ import {
   HexagonIcon,
   LucideHexagon,
   ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { useScrollTo } from './hooks/useScrollTo';
 import { ContactForm, Footer } from './components/ContactForm';
@@ -35,6 +36,27 @@ function App() {
   const [isLogoMerging, setIsLogoMerging] = useState(false);
   const navLogoRef = useRef<HTMLDivElement>(null);
   const scrollTo = useScrollTo();
+
+  // First, add a state variable to track which items are expanded
+  // You can add this near your other state variables:
+  const [expandedItems, setExpandedItems] = useState<Record<string, boolean>>({
+    about: false,
+    industries: false,
+    services: false,
+    technologies: false,
+    codeCrafters: false
+  });
+
+  // Add this function to toggle expanded state for menu items
+  const toggleMobileMenuItem = (itemName: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    setExpandedItems(prev => ({
+      ...prev,
+      [itemName]: !prev[itemName]
+    }));
+  };
 
   // Handle scroll events for animations
   useEffect(() => {
@@ -569,6 +591,7 @@ function App() {
             {isMenuOpen && (
               <div className="md:hidden py-4 border-t border-gray-800 mt-2 animate-fadeIn">
                 <div className="flex flex-col space-y-4">
+                  {/* About Us - No submenu */}
                   <div className="relative">
                     <button
                       onClick={() => handleNavClick('about')}
@@ -578,6 +601,7 @@ function App() {
                     </button>
                   </div>
 
+                  {/* Industries - No submenu */}
                   <div className="relative">
                     <button
                       onClick={() => handleNavClick('industries')}
@@ -587,58 +611,177 @@ function App() {
                     </button>
                   </div>
 
+                  {/* Services - With collapsible submenu */}
                   <div className="relative">
                     <button
-                      onClick={() => handleNavClick('services')}
+                      onClick={(e) => toggleMobileMenuItem('services', e)}
                       className="text-white hover:text-blue-300 transition-colors text-left py-2 px-3 rounded-lg hover:bg-blue-500/10 w-full flex justify-between items-center"
                     >
                       <span>Services</span>
+                      {expandedItems.services ?
+                        <ChevronUp size={18} className="text-blue-400" /> :
+                        <ChevronDown size={18} className="text-gray-400" />
+                      }
                     </button>
-                    <div className="pl-4 flex flex-col space-y-2 mt-2">
-                      <div className="text-blue-400 font-medium">Our Services</div>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Product Engineering</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">SaaS Solutions</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Cross Platform Development</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Digital Marketing</button>
-                    </div>
+                    {expandedItems.services && (
+                      <div className="pl-4 flex flex-col space-y-2 mt-2 animate-fadeIn">
+                        <div className="text-blue-400 font-medium">Our Services</div>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('services');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Product Engineering
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('services');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          SaaS Solutions
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('services');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Cross Platform Development
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('services');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Digital Marketing
+                        </button>
+                      </div>
+                    )}
                   </div>
 
+                  {/* Technologies - With collapsible submenu */}
                   <div className="relative">
                     <button
+                      onClick={(e) => toggleMobileMenuItem('technologies', e)}
                       className="text-white hover:text-blue-300 transition-colors text-left py-2 px-3 rounded-lg hover:bg-blue-500/10 w-full flex justify-between items-center"
                     >
                       <span>Technologies</span>
+                      {expandedItems.technologies ?
+                        <ChevronUp size={18} className="text-blue-400" /> :
+                        <ChevronDown size={18} className="text-gray-400" />
+                      }
                     </button>
-                    <div className="pl-4 flex flex-col space-y-2 mt-2">
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Web Technologies</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Mobile Technologies</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Cloud & DevOps</button>
-                    </div>
+                    {expandedItems.technologies && (
+                      <div className="pl-4 flex flex-col space-y-2 mt-2 animate-fadeIn">
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('technologies');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Web Technologies
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('technologies');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Mobile Technologies
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('technologies');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Cloud & DevOps
+                        </button>
+                      </div>
+                    )}
                   </div>
 
+                  {/* Code Crafters - With collapsible submenu */}
                   <div className="relative">
                     <button
+                      onClick={(e) => toggleMobileMenuItem('codeCrafters', e)}
                       className="text-white hover:text-blue-300 transition-colors text-left py-2 px-3 rounded-lg hover:bg-blue-500/10 w-full flex justify-between items-center"
                     >
                       <span>Code Crafters</span>
+                      {expandedItems.codeCrafters ?
+                        <ChevronUp size={18} className="text-blue-400" /> :
+                        <ChevronDown size={18} className="text-gray-400" />
+                      }
                     </button>
-                    <div className="pl-4 flex flex-col space-y-2 mt-2">
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Web Crafters</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Mobile Crafters</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Full Stack Crafters</button>
-                      <button className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1">Backend Crafters</button>
-                    </div>
+                    {expandedItems.codeCrafters && (
+                      <div className="pl-4 flex flex-col space-y-2 mt-2 animate-fadeIn">
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('codeCrafters');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Web Crafters
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('codeCrafters');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Mobile Crafters
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('codeCrafters');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Full Stack Crafters
+                        </button>
+                        <button
+                          className="text-white hover:text-blue-300 transition-colors text-left pl-4 py-1"
+                          onClick={() => {
+                            handleNavClick('codeCrafters');
+                            setIsMenuOpen(false);
+                          }}
+                        >
+                          Backend Crafters
+                        </button>
+                      </div>
+                    )}
                   </div>
 
+                  {/* Blogs - No submenu */}
                   <button
-                    onClick={() => handleNavClick('blogs')}
+                    onClick={() => {
+                      setActivePage('blogs');
+                      setIsMenuOpen(false);
+                    }}
                     className="text-white hover:text-blue-300 transition-colors text-left py-2 px-3 rounded-lg hover:bg-blue-500/10"
                   >
                     Blogs
                   </button>
 
+                  {/* Contact Us button */}
                   <button
-                    onClick={() => handleNavClick('contact')}
+                    onClick={() => {
+                      handleNavClick('contact');
+                      setIsMenuOpen(false);
+                    }}
                     className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white px-4 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-blue-500/20 w-full flex items-center justify-center"
                   >
                     Contact Us
