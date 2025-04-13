@@ -112,9 +112,9 @@ export function ContactForm() {
         </div>
 
         {/* USA and Canada Offices */}
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* USA Office */}
-          <div className="pr-8">
+          <div className="sm:pr-4">
             <h4 className="text-xl font-semibold mb-4 flex items-center">
               <ReactCountryFlag countryCode="US" className="mr-2" svg /> USA
             </h4>
@@ -134,28 +134,23 @@ export function ContactForm() {
             </div>
           </div>
 
-          {/* Separator */}
-          <div className="relative">
-            <div className="absolute left-0 top-0 h-full w-px bg-gray-200"></div>
-
-            {/* Canada Office */}
-            <div className="pl-8">
-              <h4 className="text-xl font-semibold mb-4 flex items-center">
-                <ReactCountryFlag countryCode="CA" className="mr-2" svg /> Canada
-              </h4>
-              <div className="space-y-4">
-                <div className="flex items-center space-x-4">
-                  <Phone className="w-6 h-6 text-blue-500" />
-                  <span>+1 (365) 383-2223</span>
-                </div>
-                <div className="flex items-start space-x-4">
-                  <MapPin className="w-6 h-6 text-blue-500 flex-shrink-0" />
-                  <span>202-215 Glenridge Avenue, St. Catharines, Ontario L2T3J7, Canada</span>
-                </div>
-                <div className="flex items-center space-x-4">
-                  <Mail className="w-6 h-6 text-blue-500" />
-                  <span>canada@aimztech.com</span>
-                </div>
+          {/* Canada Office */}
+          <div className="sm:pl-4">
+            <h4 className="text-xl font-semibold mb-4 flex items-center">
+              <ReactCountryFlag countryCode="CA" className="mr-2" svg /> Canada
+            </h4>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <Phone className="w-6 h-6 text-blue-500" />
+                <span>+1 (365) 383-2223</span>
+              </div>
+              <div className="flex items-start space-x-4">
+                <MapPin className="w-6 h-6 text-blue-500 flex-shrink-0" />
+                <span className="text-sm sm:text-base">202-215 Glenridge Avenue, St. Catharines, Ontario L2T3J7, Canada</span>
+              </div>
+              <div className="flex items-center space-x-4">
+                <Mail className="w-6 h-6 text-blue-500" />
+                <span>canada@aimztech.com</span>
               </div>
             </div>
           </div>
@@ -457,7 +452,7 @@ export const Footer = () => {
         {/* Copyright */}
         <div className="border-t border-gray-800 pt-8 text-center">
           <p className="text-gray-500">
-            © {new Date().getFullYear()} AiMZ Infotech. All rights reserved.
+            {new Date().getFullYear()} AiMZ Infotech. All rights reserved.
           </p>
           <div className="flex justify-center space-x-6 mt-4">
             <a href="#contact" className="text-gray-500 hover:text-gray-400 transition-colors">Privacy Policy</a>

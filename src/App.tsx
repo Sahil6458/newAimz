@@ -58,6 +58,26 @@ function App() {
     }));
   };
 
+  // Function to handle navigation and close dropdown
+  const handleIndustryItemClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+
+    // Navigate to contact section
+    handleNavClick('contact');
+
+    // Find the parent dropdown container and remove hover state
+    const dropdownContainer = (event.target as HTMLElement).closest('.group');
+    if (dropdownContainer) {
+      // Add a class to temporarily disable hover effects
+      dropdownContainer.classList.add('no-hover');
+
+      // Remove the class after a short delay to re-enable hover effects
+      setTimeout(() => {
+        dropdownContainer.classList.remove('no-hover');
+      }, 100);
+    }
+  };
+
   // Handle scroll events for animations
   useEffect(() => {
     const handleScroll = () => {
@@ -265,236 +285,6 @@ function App() {
                   </div>
                 </div>
 
-                <div className="relative group px-3 py-2">
-                  <button
-                    className="text-white hover:text-blue-300 transition-colors flex items-center font-medium"
-                  >
-                    Industries
-                    <ChevronDown className="w-4 h-4 ml-1 text-gray-400 group-hover:text-blue-300 transition-colors" />
-                  </button>
-                  <div className="absolute left-0 mt-2 w-[98vw] bg-black/95 bg-gradient-to-b from-gray-900 to-black border border-gray-800 backdrop-blur-sm rounded-lg shadow-lg py-6 px-8 invisible group-hover:visible transition-all opacity-0 group-hover:opacity-100 z-50 transform -translate-x-1/2 -translate-y-2 group-hover:translate-y-0 border border-gray-800">
-                    <div className="flex flex-col max-h-[80vh] overflow-y-auto custom-scrollbar">
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
-                        {/* Healthcare & Telemedicine */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Healthcare & Telemedicine</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Telehealth & Remote Patient Monitoring</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Electronic Health Records (EHR) & EMR Systems</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Hospital & Clinic Management Systems</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Health & Wellness Apps</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Wearable Health Tech</a></li>
-                          </ul>
-                        </div>
-
-                        {/* E-commerce & Retail */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">E-commerce & Retail</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">B2C & B2B Marketplaces</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Subscription-Based E-commerce</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Custom POS Systems</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Supply Chain & Inventory Management</a></li>
-                          </ul>
-                        </div>
-
-                        {/* FinTech & Banking */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">FinTech & Banking</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Digital Banking & Mobile Wallets</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">InsurTech Solutions</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Loan & Credit Management Software</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Payment Gateway Integration</a></li>
-                          </ul>
-                        </div>
-
-                        {/* EdTech */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">EdTech</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Online Learning Platforms (LMS)</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Virtual Classrooms & Webinars</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Certification & Course Management</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Gamification in Learning</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">School & College Management Systems</a></li>
-                          </ul>
-                        </div>
-
-                        {/* Logistics & Transportation */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Logistics & Transportation</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Fleet & Route Optimization Software</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Supply Chain Management Solutions</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Warehouse Automation & Inventory Tracking</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Freight & Cargo Management Systems</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">On-Demand Delivery Apps</a></li>
-                          </ul>
-                        </div>
-
-                        {/* Real Estate & PropTech */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Real Estate & PropTech</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Real Estate CRM & Lead Management</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Smart Home Automation Integration</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">AI-Powered Property Valuation Tools</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Rental & Leasing Platforms</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Mortgage & Loan Processing Solutions</a></li>
-                          </ul>
-                        </div>
-
-                        {/* On-Demand Services */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">On-Demand Services</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Food Delivery & Grocery Apps</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Home Services & Repair Apps</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Ride-Hailing & Taxi Booking Apps</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Freelance & Gig Economy Platforms</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Personal Care & Beauty Services Apps</a></li>
-                          </ul>
-                        </div>
-
-                        {/* SaaS & Cloud Solutions */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">SaaS & Cloud Solutions</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Business Management & ERP Software</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">CRM & Marketing Automation</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Cloud-Based Collaboration Tools</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">No-Code & Low-Code Platforms</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Subscription & Billing Management</a></li>
-                          </ul>
-                        </div>
-
-                        {/* Travel & Hospitality */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Travel & Hospitality</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Hotel & Resort Booking Platforms</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Flight & Transport Aggregators</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">AI-Powered Travel Assistants</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Restaurant Reservation & Food Ordering Apps</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Local Experience & Tour Guide Apps</a></li>
-                          </ul>
-                        </div>
-
-                        {/* LegalTech */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">LegalTech</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Case & Document Management Software</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">AI-Powered Contract Analysis & Drafting</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">E-Discovery & Compliance Solutions</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Online Dispute Resolution Platforms</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Law Firm CRM & Client Management</a></li>
-                          </ul>
-                        </div>
-
-                        {/* Agriculture & AgriTech */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Agriculture & AgriTech</h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Precision Farming & Smart Irrigation</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Agricultural IoT & Sensor-Based Monitoring</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">AI-Based Crop Health Analysis</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Supply Chain & Agri-Logistics Solutions</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Marketplaces for Farmers & Agri-Traders</a></li>
-                          </ul>
-                        </div>
-                      </div>
-
-                      <h2 className="text-white font-bold text-xl mb-4 border-b border-gray-200 pb-2">Digital Marketing Services</h2>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {/* SEO */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
-                            Search Engine Optimization (SEO)
-                          </h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">On-Page SEO</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Off-Page SEO</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Technical SEO</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Local SEO</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">E-commerce SEO</a></li>
-                          </ul>
-                        </div>
-
-                        {/* SMM */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
-                            Social Media Marketing (SMM)
-                          </h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Social Media Strategy</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Organic Social Media Management</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Paid Social Media Advertising</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Influencer Marketing</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Content Creation for Social Media</a></li>
-                          </ul>
-                        </div>
-
-                        {/* PPC */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
-                            Pay-Per-Click (PPC) Advertising
-                          </h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Google Ads</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Bing & Yahoo Ads</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Social Media Ads</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Retargeting & Remarketing</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">CRO for Paid Ads</a></li>
-                          </ul>
-                        </div>
-
-                        {/* Content Marketing */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
-                            Content Marketing
-                          </h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Blog Writing & Management</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">SEO-Optimized Website Content</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Whitepapers & Case Studies</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Video Marketing</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Infographic & Visual Content</a></li>
-                          </ul>
-                        </div>
-
-                        {/* Email Marketing */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
-                            Email Marketing & Automation
-                          </h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Email Campaign Strategy</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Lead Nurturing & Drip Campaigns</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Newsletter Management</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">E-commerce Email Marketing</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">AI-Based Email Personalization</a></li>
-                          </ul>
-                        </div>
-
-                        {/* Other Marketing Services */}
-                        <div>
-                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
-                            Additional Marketing Services
-                          </h3>
-                          <ul className="space-y-2">
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Conversion Rate Optimization</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Online Reputation Management</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">E-commerce Digital Marketing</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Affiliate Marketing</a></li>
-                            <li><a href="#" className="text-white hover:text-blue-600 transition-colors">Analytics & Reporting</a></li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="relative group px-3 py-2">
                   <button
@@ -512,6 +302,238 @@ function App() {
                       <li><a href="#" className="block px-4 py-2 text-white hover:bg-blue-600/20 transition-colors">Mobile app development</a></li>
                       <li><a href="#" className="block px-4 py-2 text-white hover:bg-blue-600/20 transition-colors">Digital Marketing</a></li>
                     </ul>
+                  </div>
+                </div>
+
+
+                <div className="relative group px-3 py-2">
+                  <button
+                    className="text-white hover:text-blue-300 transition-colors flex items-center font-medium"
+                  >
+                    Industries
+                    <ChevronDown className="w-4 h-4 ml-1 text-gray-400 group-hover:text-blue-300 transition-colors" />
+                  </button>
+                  <div className="absolute left-1/2 mt-2 w-[90vw] max-w-[1200px] bg-black/95 bg-gradient-to-b from-gray-900 to-black backdrop-blur-sm rounded-lg shadow-lg py-6 px-4 sm:px-8 invisible group-hover:visible transition-all opacity-0 group-hover:opacity-100 transform -translate-x-1/2 -translate-y-2 group-hover:translate-y-0 border border-gray-800">
+                    <div className="flex flex-col max-h-[80vh] overflow-y-auto custom-scrollbar">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 mb-8">
+                        {/* Healthcare & Telemedicine */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Healthcare & Telemedicine</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Telehealth & Remote Patient Monitoring</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Electronic Health Records (EHR) & EMR Systems</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Hospital & Clinic Management Systems</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Health & Wellness Apps</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Wearable Health Tech</a></li>
+                          </ul>
+                        </div>
+
+                        {/* E-commerce & Retail */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">E-commerce & Retail</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">B2C & B2B Marketplaces</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Subscription-Based E-commerce</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Custom POS Systems</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Supply Chain & Inventory Management</a></li>
+                          </ul>
+                        </div>
+
+                        {/* FinTech & Banking */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">FinTech & Banking</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Digital Banking & Mobile Wallets</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">InsurTech Solutions</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Loan & Credit Management Software</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Payment Gateway Integration</a></li>
+                          </ul>
+                        </div>
+
+                        {/* EdTech */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">EdTech</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Online Learning Platforms (LMS)</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Virtual Classrooms & Webinars</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Certification & Course Management</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Gamification in Learning</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">School & College Management Systems</a></li>
+                          </ul>
+                        </div>
+
+                        {/* Logistics & Transportation */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Logistics & Transportation</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Fleet & Route Optimization Software</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Supply Chain Management Solutions</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Warehouse Automation & Inventory Tracking</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Freight & Cargo Management Systems</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">On-Demand Delivery Apps</a></li>
+                          </ul>
+                        </div>
+
+                        {/* Real Estate & PropTech */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Real Estate & PropTech</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Real Estate CRM & Lead Management</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Smart Home Automation Integration</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">AI-Powered Property Valuation Tools</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Rental & Leasing Platforms</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Mortgage & Loan Processing Solutions</a></li>
+                          </ul>
+                        </div>
+
+                        {/* On-Demand Services */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">On-Demand Services</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Food Delivery & Grocery Apps</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Home Services & Repair Apps</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Ride-Hailing & Taxi Booking Apps</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Freelance & Gig Economy Platforms</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Personal Care & Beauty Services Apps</a></li>
+                          </ul>
+                        </div>
+
+                        {/* SaaS & Cloud Solutions */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">SaaS & Cloud Solutions</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Business Management & ERP Software</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">CRM & Marketing Automation</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Cloud-Based Collaboration Tools</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">No-Code & Low-Code Platforms</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Subscription & Billing Management</a></li>
+                          </ul>
+                        </div>
+
+                        {/* Travel & Hospitality */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Travel & Hospitality</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Hotel & Resort Booking Platforms</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Flight & Transport Aggregators</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">AI-Powered Travel Assistants</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Restaurant Reservation & Food Ordering Apps</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Local Experience & Tour Guide Apps</a></li>
+                          </ul>
+                        </div>
+
+                        {/* LegalTech */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">LegalTech</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Case & Document Management Software</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">AI-Powered Contract Analysis & Drafting</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">E-Discovery & Compliance Solutions</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Online Dispute Resolution Platforms</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Law Firm CRM & Client Management</a></li>
+                          </ul>
+                        </div>
+
+                        {/* Agriculture & AgriTech */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">Agriculture & AgriTech</h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Precision Farming & Smart Irrigation</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Agricultural IoT & Sensor-Based Monitoring</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">AI-Based Crop Health Analysis</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Supply Chain & Agri-Logistics Solutions</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Marketplaces for Farmers & Agri-Traders</a></li>
+                          </ul>
+                        </div>
+                      </div>
+
+                      <h2 className="text-white font-bold text-xl mb-4 border-b border-gray-200 pb-2">Digital Marketing Services</h2>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {/* SEO */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
+                            Search Engine Optimization (SEO)
+                          </h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">On-Page SEO</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Off-Page SEO</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Technical SEO</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Local SEO</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">E-commerce SEO</a></li>
+                          </ul>
+                        </div>
+
+                        {/* SMM */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
+                            Social Media Marketing (SMM)
+                          </h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Social Media Strategy</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Organic Social Media Management</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Paid Social Media Advertising</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Influencer Marketing</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Content Creation for Social Media</a></li>
+                          </ul>
+                        </div>
+
+                        {/* PPC */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
+                            Pay-Per-Click (PPC) Advertising
+                          </h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Google Ads</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Bing & Yahoo Ads</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Social Media Ads</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Retargeting & Remarketing</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">CRO for Paid Ads</a></li>
+                          </ul>
+                        </div>
+
+                        {/* Content Marketing */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
+                            Content Marketing
+                          </h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Blog Writing & Management</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">SEO-Optimized Website Content</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Whitepapers & Case Studies</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Video Marketing</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Infographic & Visual Content</a></li>
+                          </ul>
+                        </div>
+
+                        {/* Email Marketing */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
+                            Email Marketing & Automation
+                          </h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Email Campaign Strategy</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Lead Nurturing & Drip Campaigns</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Newsletter Management</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">E-commerce Email Marketing</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">AI-Based Email Personalization</a></li>
+                          </ul>
+                        </div>
+
+                        {/* Other Marketing Services */}
+                        <div>
+                          <h3 className="text-white font-semibold text-lg mb-3 pb-2 border-b border-gray-200">
+                            Additional Marketing Services
+                          </h3>
+                          <ul className="space-y-2">
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Conversion Rate Optimization</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Online Reputation Management</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">E-commerce Digital Marketing</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Affiliate Marketing</a></li>
+                            <li><a href="#contact" onClick={handleIndustryItemClick} className="text-white hover:text-blue-600 transition-colors">Analytics & Reporting</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -534,6 +556,8 @@ function App() {
                     </button>
                   </div>
                 </div>
+
+
 
                 <div className="relative group px-3 py-2">
                   <button
@@ -801,9 +825,10 @@ function App() {
             <div className="container mx-auto px-4 md:px-8 lg:px-16">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                 <div className="text-left">
-                  <div className="flex items-center mb-6 reveal-animation reveal-left">
+                  <div className="flex items-center mb-6 reveal-animation reveal-bottom">
                     <div className="h-1 w-16 bg-blue-500 mr-4"></div>
                     <span className="text-blue-500 font-medium">AiMZ Infotech</span>
+                    <div className="h-1 w-16 bg-blue-500 ml-2"></div>
                   </div>
                   <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white reveal-animation reveal-bottom delay-100">
                     <span className="gradient-text">We Don't Just Build IT,</span> We Perfect IT
